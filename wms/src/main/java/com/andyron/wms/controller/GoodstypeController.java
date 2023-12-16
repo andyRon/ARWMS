@@ -9,19 +9,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * <p>
- *  前端控制器
- * </p>
- *
  * @author andyron
  * @since 2023-11-05
  */
+@Api(tags = {"货品类型管理"})
 @RestController
 @RequestMapping("/goodstype")
 public class GoodstypeController {
@@ -56,8 +54,9 @@ public class GoodstypeController {
         if(StringUtils.isNotBlank(name) && !"null".equals(name)){
             wrapper.like(Goodstype::getName, name);
         }
-
-        IPage result = goodstypeService.pageCC(page, wrapper);
+        // TODO
+//        IPage result = goodstypeService.pageCC(page, wrapper);
+        Page<Goodstype> result = goodstypeService.page(page, wrapper);
         return Result.suc(result.getRecords(), result.getTotal());
     }
 

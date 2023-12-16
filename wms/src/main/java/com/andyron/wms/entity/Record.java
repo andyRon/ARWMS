@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author andyron
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="Record对象", description="")
+@ApiModel(value="操作记录", description="")
 public class Record implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +48,7 @@ public class Record implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
+    // TODO 非表中字段，入库or出库
     @TableField(exist = false)
     private String action;
 }

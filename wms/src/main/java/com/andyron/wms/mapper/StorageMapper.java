@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -17,6 +18,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface StorageMapper extends BaseMapper<Storage> {
-
-    IPage pageCC(Page<Storage> page, LambdaQueryWrapper<Storage> lambdaQueryWrapper);
+    // TODO @Param("ew")只是临时解决
+    IPage pageCC(Page<Storage> page, @Param("ew") LambdaQueryWrapper<Storage> lambdaQueryWrapper);
 }

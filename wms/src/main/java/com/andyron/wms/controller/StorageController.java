@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * <p>
- *  前端控制器
- * </p>
- *
  * @author andyron
  * @since 2023-11-05
  */
+@Api(tags = {"仓库管理"})
 @RestController
 @RequestMapping("/storage")
 public class StorageController {
@@ -57,8 +55,9 @@ public class StorageController {
         if(StringUtils.isNotBlank(name) && !"null".equals(name)) {
             lambdaQueryWrapper.like(Storage::getName, name);
         }
-
+        // TODO
         IPage result = storageService.pageCC(page, lambdaQueryWrapper);
+//        Page<Storage> result = storageService.page(page, lambdaQueryWrapper);
         return Result.suc(result.getRecords(), result.getTotal());
     }
 

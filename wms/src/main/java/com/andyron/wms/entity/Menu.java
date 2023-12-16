@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author andyron
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="Menu对象", description="")
+@ApiModel(value="菜单", description="")
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,33 +26,33 @@ public class Menu implements Serializable {
 
     @ApiModelProperty(value = "菜单编码")
     @TableField("menuCode")
-    private String menucode;
+    private String menuCode;
 
     @ApiModelProperty(value = "菜单名字")
     @TableField("menuName")
-    private String menuname;
+    private String menuName;
 
     @ApiModelProperty(value = "菜单级别")
     @TableField("menuLevel")
-    private String menulevel;
+    private String menuLevel;
 
     @ApiModelProperty(value = "菜单的父code")
     @TableField("menuParentCode")
-    private String menuparentcode;
+    private String menuParentcode;
 
     @ApiModelProperty(value = "点击触发的函数")
     @TableField("menuClick")
-    private String menuclick;
+    private String menuClick;
 
     @ApiModelProperty(value = "权限 0超级管理员，1表示管理员，2表示普通用户，可以用逗号组合使用")
     @TableField("menuRight")
-    private String menuright;
+    private String menuRight;
 
     @TableField("menuComponent")
-    private String menucomponent;
+    private String menuComponent;
 
     @TableField("menuIcon")
-    private String menuicon;
+    private String menuIcon;
 
 
 }

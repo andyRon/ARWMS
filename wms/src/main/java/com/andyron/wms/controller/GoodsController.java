@@ -10,19 +10,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * <p>
- *  前端控制器
- * </p>
- *
  * @author andyron
  * @since 2023-11-05
  */
+@Api(tags = {"货品管理"})
 @RestController
 @RequestMapping("/goods")
 public class GoodsController {

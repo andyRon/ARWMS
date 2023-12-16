@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * <p>
- *  前端控制器
- * </p>
- *
  * @author andyron
  * @since 2023-10-30
  */
+@Api(tags = {"用户管理"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -52,6 +50,35 @@ public class UserController {
     public Result save(@RequestBody User user) {
         return userService.save(user) ? Result.suc() : Result.fail();
     }
+
+    @ApiOperation("更新")
+    @PostMapping("/update")
+    public Result update(@RequestBody User user) {
+        return userService.updateById(user) ? Result.suc() : Result.fail();
+    }
+
+    @ApiOperation("删除")
+    @GetMapping("/del")
+    public Result del(@RequestParam String id) {
+        return userService.removeById(id) ? Result.suc() : Result.fail();
+    }
+
+    @ApiOperation("登录")
+    @PostMapping("/login")
+    public Result login(@RequestBody User user) {
+        List<User> list = userService.lambdaQuery().eq(User::getNo, user.getNo()).
+                eq(User::getPassword, user.getPassword()).list();
+        if (list.size() > 0) {
+            User u = (User) list.get(0);
+            List<Menu> menuList = menuService.lambdaQuery().like(Menu::getMenuRight, u.getRoleId()).list();
+            HashMap res = new HashMap();
+            res.put("user", u);
+            res.put("menu", menuList);
+            return Result.suc(res);
+        }
+        return Result.fail();
+    }
+
     /**
      * 修改
      */
@@ -120,24 +147,40 @@ public class UserController {
         return Result.suc(result.getRecords(), result.getTotal());
     }
 
+    @PostMapping("/listPageC1")
+    public Result listPageC1(@RequestBody QueryPageParam query) {
+        HashMap param = query.getParam();
+        String name = (String) param.get("name");
+        String sex = (String) param.get("sex");
+        String roleId = (String) param.get("roleId");
+
+        Page<User> page = new Page<>();
+        page.setCurrent(query.getPageNum());
+        page.setSize(query.getPageSize());
+
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+
+        if (StringUtils.isNotBlank(name) && !"null".equals(name)) {
+            wrapper.like(User::getName, name);
+        }
+        if (StringUtils.isNotBlank(sex)) {
+            wrapper.eq(User::getSex, sex);
+        }
+        if (StringUtils.isNotBlank(roleId)) {
+            wrapper.eq(User::getRoleId, roleId);
+        }
+
+        IPage<User> result = userService.page(page, wrapper);
+
+        return Result.suc(result.getRecords(), result.getTotal());
+
+    }
+
     @GetMapping("/findByNo")
     public Result findByNo(@RequestParam String no) {
         List<User> list = userService.lambdaQuery().eq(User::getNo, no).list();
         return list.size() > 0 ? Result.suc(list) : Result.fail();
     }
 
-    @PostMapping("/login")
-    public Result login(@RequestBody User user) {
-        List<User> list = userService.lambdaQuery().eq(User::getNo, user.getNo()).
-                eq(User::getPassword, user.getPassword()).list();
-        if (list.size() > 0) {
-            User u = (User) list.get(0);
-            List<Menu> menuList = menuService.lambdaQuery().like(Menu::getMenuright, u.getRoleId()).list();
-            HashMap res = new HashMap();
-            res.put("user", u);
-            res.put("menu", menuList);
-            return Result.suc(res);
-        }
-        return Result.fail();
-    }
+
 }

@@ -21,5 +21,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface GoodsMapper extends BaseMapper<Goods> {
 
+    // TODO  注意这里 @Param
     IPage pageCC(Page<Goods> page, @Param(Constants.WRAPPER) Wrapper wrapper);
 }

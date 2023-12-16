@@ -1,15 +1,22 @@
 package com.andyron.wms.common;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
  * @author andyron
  **/
+@ApiModel(value = "返回结果对象")
 @Data
 public class Result {
+    @ApiModelProperty(value = "返回码")
     private int code;
+    @ApiModelProperty(value = "返回信息")
     private String msg;
+    @ApiModelProperty(value = "返回数据条数")
     private Long total;
+    @ApiModelProperty(value = "返回数据")
     private Object data;
 
     private static Result result(int code, String msg, Long total, Object data) {

@@ -1,5 +1,6 @@
 package com.andyron.wms.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 /**

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author andyron
@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="User对象", description="")
+@ApiModel(value="用户", description="")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,6 +37,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @ApiModelProperty(value = "年龄")
     private Integer age;
 
     @ApiModelProperty(value = "性别")

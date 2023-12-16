@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author andyron
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("goodsType")
-@ApiModel(value="Goodstype对象", description="")
+@ApiModel(value="货品类型", description="")
 public class Goodstype implements Serializable {
 
     private static final long serialVersionUID = 1L;

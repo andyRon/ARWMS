@@ -52,7 +52,7 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/wms?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
-      password: 33824
+      password: 
 ```
 
 ### 3 使用代码生成器生成代码
@@ -270,7 +270,7 @@ Vue.prototype.$axios =axios;
 4. 提交数据(提示信息、列表刷新) 
 4. 数据的检查
 
-
+🔖 p22 
 
 6. 账号的唯一验证
 
@@ -280,7 +280,7 @@ Vue.prototype.$axios =axios;
 
 
 
-🔖p21
+
 
 
 
@@ -289,6 +289,43 @@ Vue.prototype.$axios =axios;
 1. 传递数据到表单 
 2. 提交数据到后台 
 3. 表单重置
+
+
+
+🔖改进
+
+- 不让修改账号
+- 
+
+```vue
+<template slot-scope="scope">
+  <el-button type="success" size="small" @click="mod(scope.row)">编辑</el-button>
+  <el-button type="danger" size="small" @click="del">删除</el-button>
+</template>
+```
+
+```js
+    mod(row) {
+      // 先显示表单，然后再异步地加载表单数据；
+      // 这样如果再关闭表单，表单的值就会回到初始空值
+      // 如果赋值在前，打开表达在后，那么之后在关闭表单是，表单里的值就是赋值的值
+      this.centerDialogVisible = true
+      this.$nextTick(() => { // 异步
+        this.form.id = row.id
+        this.form.no = row.no
+        this.form.name = row.name
+        this.form.password = ''
+        this.form.age = row.age + ''
+        this.form.sex = row.sex + ''
+        this.form.phone = row.phone
+        this.form.roleId = row.roleId
+      })
+    }
+```
+
+
+
+
 
 ### 21 删除
 
@@ -304,7 +341,7 @@ Vue.prototype.$axios =axios;
 2. 后台查询代码
 3. 登录⻚面的路由
 
-安装路由插件(npm i vue-router@3.5.4 ) 
+安装路由插件(`npm i vue-router@3.5.4` ) 
 
 创建路由文件
 
@@ -323,7 +360,7 @@ routes })
 export  default router;
 ```
 
-mainjs注册
+main.js注册
 
 
 
@@ -335,6 +372,19 @@ mainjs注册
 2. 退出登录事件
 3. 退出跳转、清空相关数据 
 3. 退出确认
+
+
+
+🔖 navtive
+
+```vue
+<el-dropdown-menu slot="dropdown">
+  <el-dropdown-item @click.native="toUser">个人中心</el-dropdown-item>
+  <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
+</el-dropdown-menu>
+```
+
+
 
 ### 24 首页个人中心
 
@@ -357,9 +407,28 @@ VueRouter.prototype.push = function push (to) {
 1. 配置子菜单
 3. 模拟动态menu
 
+![](images/image-20231203143911701.png)
+
 ### 26 动态路由
 
+1. 设计menu表和数据
+2. 生成menu对应的后端代码
+3. 返回数据
+4. vuex状态管理
+   - 安装(`npm i vuex@3.0.0`) 
+   - 编写store
+   - main.js注册
+5. 生成menu数据
+6. 生成路由数据
 
+- 获取路由列表
+
+路由列表 router.options.routes 
+
+- 组装路由
+
+- 合并路由
+- 错误处理
 
 
 
@@ -375,6 +444,10 @@ VueRouter.prototype.push = function push (to) {
 3. postman测试查询代码 
 3. 编写前端相关代码
 
+
+
+
+
 ### 29 物品类型管理
 
 1. 表设计
@@ -382,6 +455,8 @@ VueRouter.prototype.push = function push (to) {
 3. 编写后端增删改成代码 
 3. postman测试查询代码 
 3. 编写前端相关代码
+
+
 
 ### 30 物品管理
 
@@ -412,6 +487,8 @@ callback(new Error('数量输入过大')); }else{
 7. 查询条件中增加仓库和分类的条件 
 7. 表单中仓库和分类下拉实现
 
+
+
 ### 31 记录管理
 
 1. 表设计
@@ -429,11 +506,44 @@ callback(new Error('数量输入过大')); }else{
   
 3. 用户选择
 
+
+
 ### 33 优化
 
-1. 出入库权限控制 
+1. 出入库权限控制
+
+```html
+<el-button type="primary" style="margin-left: 5px;" @click="add" v-if="user.roleId!=2">新增</el-button>
+<el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button>
+<el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出库</el-button>
+```
+
+
+
+同样的方式也可以在编辑、删除按钮添加上面的`v-if`
+
+ 
+
 2. 记录查询权限控制
+
+
+
+### 34 vuex持久化后刷新丢失问题（菜单和动态路由）
+
+🔖
+
+
+
+
 
 ## 如何部署前后端分离项目（springboot+vue）
 
-【已三连关注 + 欣欣向戎rm】
+
+
+
+
+> 需要优化的点
+>
+> - 密码不能用明码保存
+> - 前端本地不要存储密码
+> - 入库时间
