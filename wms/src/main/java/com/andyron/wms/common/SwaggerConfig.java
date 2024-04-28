@@ -30,7 +30,7 @@ public class SwaggerConfig {
                 .title("网站-仓库管理系统API文档")
                 .description("本文档描述了仓库管理系统接口定义")
                 .version("1.0")
-                .contact(new Contact("AndyRon", "http://andyron.com", "rongming.2008@163.com"))
+                .contact(new Contact("AndyRon", "http://andyron.top", "rongming.2008@163.com"))
                 .build();
     }
 }
